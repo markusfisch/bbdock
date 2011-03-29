@@ -45,7 +45,7 @@ namespace bbdock
 {
 	/**
 	 * Abstract class, this object is only a base for the following
-	 * implentations, it got also a static member wich use is to invoke
+	 * implentations, it got also a static member which use is to invoke
 	 * the right object
 	 *
 	 * @author mf@markusfisch.de

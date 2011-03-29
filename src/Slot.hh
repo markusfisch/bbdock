@@ -45,7 +45,7 @@
 namespace bbdock
 {
 	/**
-	 * Shows an icon in the BlackBox slit from wich the user
+	 * Shows an icon in the BlackBox slit from which the user
 	 * can launch a corresponding application
 	 *
 	 * @author mf@markusfisch.de

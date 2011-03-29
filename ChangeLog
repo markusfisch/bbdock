@@ -52,7 +52,7 @@ BBDock version 0.1.4 released
 	  right-click action can be configured on the command line and can also 
 	  lower or close a window.
 	* the running-instance-mark comes now in four flavors, the known play-arrow,
-	  three little dots, a right-bottom-corner and a little cross wich is 
+	  three little dots, a right-bottom-corner and a little cross which is 
 	  even clickable (closes the application).  Every mark can be moved 
 	  within the window by specifiying a left/top (or if negative right/bottom) 
 	  margin on the command line (see bbdock -h for details).
