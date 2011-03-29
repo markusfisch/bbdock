@@ -1,0 +1,112 @@
+Date: Tue, 11 Jan 2011 08:33:00 +0200
+BBDock version 0.2.9 released
+	* check for libpng in configure.ac updated
+	* additional includes in Icon.cc and WindowManager.cc
+
+
+Date: Fri, 13 Oct 2006 01:24:55 +0200
+BBDock version 0.2.8 released
+	* BSD licence
+	* compiles with gcc4
+
+
+Date: Tue, 01 Aug 2006 00:29:21 +0200
+BBDock version 0.2.7 released
+	* now compiles on FreeBSD (Francis)
+	* all sources wrapped with autotools (Francis)
+
+
+Date: Sun, 22 May 2005 23:46:58 +0200
+BBDock version 0.2.6 released
+	* a switch for a secondary left-button action (command line argument 
+	  -l, see bbdock -h)
+	* another switch for case-sensitive matching (-c); case-insensitive is 
+	  default now
+	* support for multiple window-titles for each icon (window-titles 
+	  should be seperated by a semikolon).  The 
+	  multiple-window-title-feature proves to be a very handy way to 
+	  iconify/lower a whole application along with its dependend windows 
+	  (like GIMP or Thunderbird).  It works very well if proper configured.
+	  There is only one thing that should be noted so far: if you have a
+	  window-title containing a ':', use the wildcard '?' instead since you 
+	  can't specify ':' in a data field in .bbdockrc (no character escaping 
+	  supported right now)
+	* some minor bug fixes.  The whole thing changed a bit nevertheless
+
+
+Date: Fri, 06 May 2005 22:14:17 +0200
+BBDock version 0.1.4 released
+	* more precise version numbering.  Markus decided to switch to the 
+	  release.upgrade.update scheme for clarity.  Hence the release before 
+	  this one could be called 0.0.9 .
+	* important change: the window-titles are now matched exactly (with 
+	  wildcards), not as case-insensitive substring. This became neccessary 
+	  to avoid misinterpretation of window-titles with filenames or 
+	  html-titles in it.  For example, one ~/.bbdockrc could look like 
+	  that,
+		~/icons/firefox.png:firefox:*Mozilla Firefox
+		~/icons/thunderbird.png:thunderbird:*Mozilla Thunderbird
+		~/icons/writer.png:soffice -writer:*OpenOffice.org*
+		~/icons/gaim.png:gaim:GAIM
+	* a corresponding window may now be iconified with a right-click.  The 
+	  right-click action can be configured on the command line and can also 
+	  lower or close a window.
+	* the running-instance-mark comes now in four flavors, the known play-arrow,
+	  three little dots, a right-bottom-corner and a little cross wich is 
+	  even clickable (closes the application).  Every mark can be moved 
+	  within the window by specifiying a left/top (or if negative right/bottom) 
+	  margin on the command line (see bbdock -h for details).
+	* for advanced (and/or impatient ;-)) users, you may now adjust the 
+	  idle time (grey-state) of every icon in a fourth field, see README for a 
+	  sample, you may use some keywords here also. Due to integer precision 
+	  the given time (in miliseconds) is only an approximation but it 
+	  should fit the purpose :-)
+	* the possibility to execute an icon remotely; this allows you to 
+	  launch some application by a hotkey and still have it bound to some icon, refer 
+	  to -x in help
+	* X11 copy'n paste support, you may now middle-click any (non-active) 
+	  icon to launch it with the clipboard contents as command line 
+	  argument, one use of this may be pasting an internet adress over 
+	  Firefox or some file over some editor.
+
+
+Date: Thu, 28 Apr 2005 00:04:13 +0200
+	* BBDock CVS in production :-)
+
+
+Date: Wed Apr 27 02:20:50 CEST 2005
+	* Slit.cc replacement for blackbox 0.70 fixes a trancparency issue 
+	  (place into blackbox-0.70/src/).
+	  http://bbdock.nethence.com/download/Slit.cc
+
+
+Date: Sat, 12 Mar 2005 22:17:02 +0100
+BBDock version 0.09 released
+	* fixed a little error in the window-raising code
+
+
+Date: Tue, 08 Mar 2005 21:40:16 +0100
+BBDock version 0.08 released
+	* fixed an error rendering dark transparent images
+	* tested and fixed the 16bit color-depth rendering code
+	* added a little arrow in the upper left corner to indicate the 
+	  application is already running
+	* completed the remote control function (command line argument -i, see 
+	  -h) to swap icons (to reflect a change for example)
+	* normal (non-exclusive) icons now are tracking their processes while 
+	  in grey-state also, this allows the icon to become immediately 
+	  available again if the process terminates before the delay has 
+	  elapsed
+
+
+Date: Tue, 08 Mar 2005 01:07:01 +0100
+BBDock version 0.07 released
+	* now supports exclusive applications and can raise them itself
+	* it finally runs silently and modestly in one single process and
+	  responses much nicer to clicks
+	* I had to change the format of the configuration file a little: use 
+	  ':' to seperate icons and commands, not just a number of blanks. This 
+	  became neccessary because you might now add a third field:  the 
+	  window title; if you like the icon to raise the already running 
+	  instance instead of starting a new one. Refer to "bbdock -h" or the 
+	  README file for (more) information on this ;-)
