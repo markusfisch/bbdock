@@ -53,9 +53,9 @@ const double Slot::fadestep = 1.05;
  * @param i - Icon object
  * @param n - next Slot in chain
  */
-Slot::Slot( Dock &d, Icon &i, Slot *n ) : 
-	dock( &d ), 
-	icon( &i ), 
+Slot::Slot( Dock &d, Icon &i, Slot *n ) :
+	dock( &d ),
+	icon( &i ),
 	next( n ),
 	render( 0 ),
 	normalicon( 0 ),
@@ -76,7 +76,7 @@ Slot::Slot( Dock &d, Icon &i, Slot *n ) :
 
 	// create dummy window and dock slot
 	{
-		dummy = XCreateSimpleWindow( dock->getDisplay(), root, 
+		dummy = XCreateSimpleWindow( dock->getDisplay(), root,
 			0, 0, 1, 1, 1, 0, 0 );
 
 		XSizeHints sh;
@@ -92,13 +92,13 @@ Slot::Slot( Dock &d, Icon &i, Slot *n ) :
 		xswat.background_pixmap = ParentRelative;
 		vmask = CWBackPixmap;
 
-		window = XCreateWindow( dock->getDisplay(), root, 
-			sh.x, sh.y, 
+		window = XCreateWindow( dock->getDisplay(), root,
+			sh.x, sh.y,
 			sh.width, sh.height,
-			0, 
-			CopyFromParent, 
+			0,
+			CopyFromParent,
 			InputOutput,
-			CopyFromParent, 
+			CopyFromParent,
 			vmask, &xswat );
 
 		sh.flags = USSize | USPosition;
@@ -131,8 +131,8 @@ Slot::Slot( Dock &d, Icon &i, Slot *n ) :
 
 	XSelectInput( dock->getDisplay(), window,
 		ButtonReleaseMask | ButtonPressMask |
-		ExposureMask | VisibilityChangeMask | 
-		StructureNotifyMask | SubstructureNotifyMask | 
+		ExposureMask | VisibilityChangeMask |
+		StructureNotifyMask | SubstructureNotifyMask |
 		PropertyChangeMask );
 
 	XMapWindow( dock->getDisplay(), dummy );
@@ -164,19 +164,19 @@ void Slot::draw( bool refresh )
 
 		// render active mark
 		if( pid && icon->isExclusive() )
-			render->activeMark( (unsigned char *) image, 
+			render->activeMark( (unsigned char *) image,
 				dock->getMarkType(), dock->getMarkLeft(), dock->getMarkTop() );
 
 		// render icon
 		if( fading < Complete )
-			render->ghosted( (unsigned char *) image, 
+			render->ghosted( (unsigned char *) image,
 				(unsigned char *) normalicon, fading );
 		else
-			render->opaque( (unsigned char *) image, 
+			render->opaque( (unsigned char *) image,
 				(unsigned char *) normalicon );
 	}
 
-	XPutImage( dock->getDisplay(), window, dock->getGC(), surface, 0, 0, 
+	XPutImage( dock->getDisplay(), window, dock->getGC(), surface, 0, 0,
 		left, top, width, height );
 }
 
@@ -199,7 +199,7 @@ void Slot::exec( char *arg )
 			{
 				Window w;
 
-				if( !(w = wm.getWindowFromName( *it, 
+				if( !(w = wm.getWindowFromName( *it,
 					dock->getCaseSensitive() )) )
 					continue;
 
@@ -244,7 +244,7 @@ void Slot::exec( char *arg )
 			return;
 	}
 
-	// calculate offset for fade-in, this is here and done on every launch 
+	// calculate offset for fade-in, this is here and done on every launch
 	// because 1) fading is a visual effect of Slot and there may be more
 	// effects in the future and 2) the icon object may be changed by some
 	// user interaction
@@ -279,7 +279,7 @@ void Slot::iconifyApplication()
 	{
 		Window w;
 
-		if( !(w = wm.getWindowFromName( *it, 
+		if( !(w = wm.getWindowFromName( *it,
 			dock->getCaseSensitive() )) )
 			continue;
 
@@ -293,7 +293,7 @@ void Slot::iconifyApplication()
 void Slot::lowerApplication()
 {
 	if( !pid ||
-		!icon->isExclusive() || 
+		!icon->isExclusive() ||
 		icon->getTitle().empty() )
 		return;
 
@@ -305,7 +305,7 @@ void Slot::lowerApplication()
 	{
 		Window w;
 
-		if( !(w = wm.getWindowFromName( *it, 
+		if( !(w = wm.getWindowFromName( *it,
 			dock->getCaseSensitive() )) )
 			continue;
 
@@ -318,7 +318,7 @@ void Slot::lowerApplication()
  */
 void Slot::closeApplication()
 {
-	if( !pid || 
+	if( !pid ||
 		!icon->isExclusive() )
 		return;
 
@@ -334,7 +334,7 @@ void Slot::closeApplication()
 		{
 			Window w;
 
-			if( !(w = wm.getWindowFromName( *it, 
+			if( !(w = wm.getWindowFromName( *it,
 				dock->getCaseSensitive() )) )
 				continue;
 
@@ -408,7 +408,7 @@ const bool Slot::hasFocus()
 	vector<string>::iterator end = t.end();
 
 	for( ; it != end; ++it )
-		if( wm.getWindowFromName( *it, 
+		if( wm.getWindowFromName( *it,
 			dock->getCaseSensitive() ) == w )
 			return true;
 
@@ -420,6 +420,8 @@ const bool Slot::hasFocus()
  */
 void Slot::loadIcon()
 {
+	png_bytep *rowPointers;
+
 	destroyIcon();
 	width = height = 0;
 
@@ -440,33 +442,35 @@ void Slot::loadIcon()
 
 		png_init_io( png, fp );
 		png_set_sig_bytes( png, 0 );
-		png_read_png( png, info, 
-			PNG_TRANSFORM_IDENTITY | 
+		png_read_png( png, info,
+			PNG_TRANSFORM_IDENTITY |
 			PNG_TRANSFORM_EXPAND |
 			PNG_TRANSFORM_BGR,
 			0 );
 
-		if( !(info->valid & PNG_INFO_IDAT) ||
-			!(normalicon = new int[info->width*info->height]) )
+		width = png_get_image_width( png, info );
+		height = png_get_image_height( png, info );
+
+		if( !png_get_valid( png, info, PNG_INFO_IDAT ) ||
+			!(normalicon = new int[width*height]) )
 			throw 0;
 
-		for( int y = 0, *src, *dest = normalicon; 
-			y < info->height && (src = (int *) info->row_pointers[y]); 
-			y++, dest += info->width )
-			memcpy( dest, src, info->width<<2 );
+		rowPointers = png_get_rows( png, info );
 
-		width = info->width;
-		height = info->height;
+		for( int y = 0, *src, *dest = normalicon;
+			y < height && (src = (int *) rowPointers[y]);
+			y++, dest += width )
+			memcpy( dest, src, width<<2 );
 
 		// convert grayscale image to rgb
-		if( info->color_type == PNG_COLOR_TYPE_GRAY_ALPHA )
-			for( int y = info->height, *line = normalicon;
-				--y; line += info->width )
+		if( png_get_color_type(png, info) == PNG_COLOR_TYPE_GRAY_ALPHA )
+			for( int y = height, *line = normalicon;
+				--y; line += width )
 			{
-				unsigned char *dest = (unsigned char *) line+(info->width<<2);
-				unsigned char *src = (unsigned char *) line+(info->width<<1);
+				unsigned char *dest = (unsigned char *) line+(width<<2);
+				unsigned char *src = (unsigned char *) line+(width<<1);
 
-				for( int x = info->width; --x; )
+				for( int x = width; --x; )
 				{
 					*(--dest) = *(--src);
 					*(--dest) = *(--src);
@@ -516,15 +520,15 @@ void Slot::createSurface()
 {
 	destorySurface();
 
-	if( !(render = Render::getInstance( dock->getBitsPerPixel(), 
+	if( !(render = Render::getInstance( dock->getBitsPerPixel(),
 			width, height )) ||
 		!(background = (char *) calloc( render->getSize(), sizeof( char ) )) ||
 		!(image = (char *) calloc( render->getSize(), sizeof( char ) )) ||
-		!(surface = XCreateImage( dock->getDisplay(), 
-			DefaultVisual( dock->getDisplay(), dock->getScreen() ), 
-			DefaultDepth( dock->getDisplay(), dock->getScreen() ), 
-			ZPixmap, 0, image, 
-			width, height, 
+		!(surface = XCreateImage( dock->getDisplay(),
+			DefaultVisual( dock->getDisplay(), dock->getScreen() ),
+			DefaultDepth( dock->getDisplay(), dock->getScreen() ),
+			ZPixmap, 0, image,
+			width, height,
 			32, 0 )) )
 		throw "Could not create XImage !";
 }
@@ -546,7 +550,7 @@ void Slot::destorySurface()
 		free( background );
 		background = 0;
 	}
-	
+
 	if( render )
 	{
 		delete render;
@@ -577,9 +581,9 @@ void Slot::getBackground()
 	}
 
 	if( !slit )
-		return;			
+		return;
 
-	// check if window is visible on screen since XGetSubImage 
+	// check if window is visible on screen since XGetSubImage
 	// fails otherwise
 	{
 		XWindowAttributes wa;
@@ -588,14 +592,14 @@ void Slot::getBackground()
 
 		if( wa.map_state != IsViewable ||
 			wa.x < 0 ||
-			wa.y < 0 || 
-			wa.x+wa.width > dock->getScreenWidth() || 
+			wa.y < 0 ||
+			wa.x+wa.width > dock->getScreenWidth() ||
 			wa.y+wa.height > dock->getScreenHeight() )
 			return;
 	}
 
 	XClearWindow( dock->getDisplay(), window );
-	XGetSubImage( dock->getDisplay(), window, left, top, width, height, 
+	XGetSubImage( dock->getDisplay(), window, left, top, width, height,
 		0xffffffff, ZPixmap, surface, 0, 0 );
 
 	if( visibility == VisibilityUnobscured )
