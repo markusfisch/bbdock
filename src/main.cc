@@ -196,7 +196,7 @@ IDLE        - idle time after triggering one icon in miliseconds, instead\n\
 						<< endl;
 					return 0;
 				case 'v':
-					cout << "bbdock, version 0.2.9 <mf@markusfisch.de>" << endl;
+					cout << "bbdock, version 0.2.10 <mf@markusfisch.de>" << endl;
 					return 0;
 				case 'd':
 					{

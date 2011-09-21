@@ -5,7 +5,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(bbdock, 0.2.9, Markus Fisch)
+AC_INIT(bbdock, 0.2.10, Markus Fisch)
 AC_CONFIG_SRCDIR([src/Dock.cc])
 AC_CONFIG_HEADER([config.h])
 
