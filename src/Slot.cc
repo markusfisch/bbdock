@@ -123,8 +123,8 @@ Slot::Slot( Dock &d, Icon &i, Slot *n ) :
 	{
 		XClassHint xch;
 
-		xch.res_name = "bbdock";
-		xch.res_class = "bbdock";
+		xch.res_name = (char *) "bbdock";
+		xch.res_class = xch.res_name;
 
 		XSetClassHint( dock->getDisplay(), dummy, &xch );
 	}
@@ -231,8 +231,8 @@ void Slot::exec( char *arg )
 
 				char *argv[4];
 
-				argv[0] = "sh";
-				argv[1] = "-c";
+				argv[0] = (char *) "sh";
+				argv[1] = (char *) "-c";
 				argv[2] = (char *) cmd.c_str();
 				argv[3] = 0;
 
