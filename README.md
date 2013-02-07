@@ -9,20 +9,19 @@ which you can launch the corresponding applications. It is pretty similar
 in function and appearance to bbbutton which you might want to try if you
 are reading this on a display with a color-depth below 16 bits.
 
-How to compile
+How to install
 --------------
 
-Since you are reading this I assume you already unpacked the archive into
-some directory.
+Usual autotools install:
 
-	./configure
-	make
-	su
-	make install
+	$ ./configure
+	$ make
+	$ su
+	$ make install
 
 For more options try ./configure --help
 
-You need X11 libraries & headers and libpng-devel. If anything fails,
+You need X11 libraries & headers and libpng. If anything goes wrong,
 just drop me a line at mf@markusfisch.de.
 
 Configuration
@@ -32,7 +31,7 @@ You may invoke bbdock either with your icons specified on command line
 or simply create a short configuration file (.bbdockrc) in your home
 directory.
 
-The syntax for a command-line-argument or a line in the configuration
+The syntax for a command line argument or a line in the configuration
 file is equal:
 
 	IMAGEFILE:COMMAND[:WINDOWTITLE;[:IDLE]]
@@ -40,7 +39,7 @@ file is equal:
 	IMAGEFILE   - should be path and filename of some PNG icon
 	COMMAND     - a script or binary to execute
 	WINDOWTITLE - is a semicolon-seperated list of case-insensitive
-				  window-titles of corresponding application-windows.
+				  window titles of corresponding application windows.
 				  Those strings may contain wildcard characters
 				  (* and/or ?) to exclusively identify a window. By
 				  providing this list you make the icon exclusive to
@@ -62,7 +61,7 @@ Sample out of a ~/.bbdockrc:
 	~/.icons/firefox.png:firefox:*Firefox
 
 To start by configuration file, just run bbdock. Type "bbdock -h" for
-a detailed view of general options.
+a detailed view of options.
 
 Requirements
 ------------
@@ -70,14 +69,13 @@ Requirements
 The images should be not much greater than 48x48 pixels and must be in
 PNG format. Use images with transparency to get the most out of it.
 
-You need libpng-devel to compile this software. The raise-window
-function is only available to window managers which implement the EWMH
-specification.
+You need libpng to compile this software. The raise-window function is
+only available to window managers which implement the EWMH specification.
 
 Bugs
 ----
 
-Currently there are only two known bugs you might run into:
+Currently there are only two known bugs:
 
 If you're using BlackBox > 0.70 you need to patch it in order to make it
 work correctly. Just insert the following code after line 250 into
@@ -95,8 +93,8 @@ to FluxBox 0.9 to fix this problem.
 Links
 -----
 
-bbdock - http://bbdock.nethence.com
-BlackBox - http://blackboxwm.sourceforge.net/
-FluxBox - http://www.fluxbox.org/
-BBButton - http://www.angelfire.com/theforce/button/
-wmctrl - http://sweb.cz/tripie/utils/wmctrl/
+* [bbdock](http://bbdock.nethence.com)
+* [BlackBox](http://blackboxwm.sourceforge.net)
+* [FluxBox](http://www.fluxbox.org)
+* [BBButton](http://www.angelfire.com/theforce/button)
+* [wmctrl](http://sweb.cz/tripie/utils/wmctrl)
